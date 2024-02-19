@@ -7,26 +7,31 @@ public class GestorBiblioteca {
 	public static void run() {
 		int opcion;
 		do {
-			menu.mostrarMenuPrincipal();
+			Menu.mostrarMenuPrincipal();
 			opcion = Integer.parseInt(scan.nextLine());
 			
 			switch (opcion) {
-			case menu.SALIR:		
+			case Menu.SALIR:		
 				break;
 
-			case menu.GESTIONAR_LIBROS:
-				menu.mostrarMenuLibros();
-				opcion = Integer.parseInt(scan.nextLine());
+			case Menu.GESTIONAR_LIBROS:
+				GestorLibros.run();
 				break;
 				
-			case menu.
+			case Menu.GESTIONAR_SOCIOS:
+				GestorSocios.run();
+				break;
+				
+			case Menu.GESTIONAR_PRESTAMOS:
+				
+				break;
 				
 			default:
-				System.out.println("OPCION NO DISPONIBLE");
+				Menu.mensajeNoDisponible();
 				break;
 			}
-		} while (opcion!=menu.SALIR);
-		menu.mensajeSalir();
+		} while (opcion!=Menu.SALIR);
+		Menu.mensajeSalir();
 	}
 
 }
