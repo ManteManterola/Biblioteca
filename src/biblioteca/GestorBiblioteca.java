@@ -23,7 +23,7 @@ public class GestorBiblioteca {
 				break;
 				
 			case Menu.GESTIONAR_PRESTAMOS:
-				
+				GestorPrestamos.run();
 				break;
 				
 			default:

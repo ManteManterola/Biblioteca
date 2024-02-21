@@ -1,10 +1,12 @@
 package biblioteca;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import clases.Libro;
 import clases.Socio;
@@ -39,6 +41,24 @@ public class GestorBBDD extends Conector {
 			preparedSt.setString(4, socio.getPoblacion());
 			preparedSt.setString(5, socio.getProvincia());
 			preparedSt.setString(6, socio.getDni());
+			
+			preparedSt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertarPrestamo(int idLibro, int idSocio) {
+		String sentenciaInsert = "INSERT INTO `prestamos` (`id_libro`, `id_socio`, `fecha`, `devuelto`) VALUES (?, ?, ?, ?)";
+		PreparedStatement preparedSt;
+		Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+		
+		try {
+			preparedSt = con.prepareStatement(sentenciaInsert);
+			preparedSt.setInt(1, idLibro);
+			preparedSt.setInt(2, idSocio);
+			preparedSt.setDate(3, fechaActual);
+			preparedSt.setBoolean(4, false);
 			
 			preparedSt.execute();
 		} catch (SQLException e) {
@@ -204,5 +224,43 @@ public class GestorBBDD extends Conector {
 		}
 		return socio;
 
+	}
+	
+	public int getIdConTitulo(String titulo) {
+		int id = 0;
+		String sentenciaSelect = "SELECT id FROM libros WHERE titulo = ? ";
+		
+		try {
+			PreparedStatement preparedSt = con.prepareStatement(sentenciaSelect);
+			String tituloLibro = titulo;
+			preparedSt.setString(1, tituloLibro);
+			ResultSet resultado = preparedSt.executeQuery();
+			
+			if (resultado.next()) {
+				id = resultado.getInt("id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;	
+	}
+	
+	public int getIdConDni(String dni) {
+		int id = 0;
+		String sentenciaSelect = "SELECT id FROM socios WHERE dni = ? ";
+		
+		try {
+			PreparedStatement preparedSt = con.prepareStatement(sentenciaSelect);
+			String dniSocio = dni;
+			preparedSt.setString(1, dniSocio);
+			ResultSet resultado = preparedSt.executeQuery();
+			
+			if (resultado.next()) {
+				id = resultado.getInt("id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 }

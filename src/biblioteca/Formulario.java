@@ -8,6 +8,7 @@ import clases.Socio;
 public class Formulario {
 	static Scanner scan = new Scanner(System.in);
 
+	//Pedir datos para hacer el insert
 	public static Libro pedirDatosLibro(Scanner scan) {
 		Libro libro = new Libro();
 
@@ -98,5 +99,17 @@ public class Formulario {
 		int id = scan.nextInt();
 		return id;
 
+	}
+	
+	static String pedirTituloLibro(Scanner scan) {
+		System.out.println("Introduce el titulo del libro");
+		String titulo = scan.next();
+		return titulo;	
+	}
+	
+	static String pedirDniSocio(Scanner scan) {
+		System.out.println("Introduzca su DNI:");
+		String dni = scan.next();
+		return dni;
 	}
 }
