@@ -17,6 +17,12 @@ public class Visor {
 		}
 	}
 	
+	public static void mostrarPrestamos(ArrayList<Prestamo> prestamos) {
+		for (Prestamo prestamo : prestamos) {
+			System.out.println(prestamo);
+		}
+	}
+	
 	public static void mostrarLibro(Libro libro) {
 		System.out.println(libro);
 	}
@@ -24,5 +30,6 @@ public class Visor {
 	public static void mostrarSocio(Socio socio) {
 		System.out.println(socio);
 	}
+	
 
 }

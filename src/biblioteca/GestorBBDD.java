@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import clases.Libro;
+import clases.Prestamo;
 import clases.Socio;
 
 public class GestorBBDD extends Conector {
@@ -100,8 +101,22 @@ public class GestorBBDD extends Conector {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void devolverPrestamo(int idLibro, int idSocio) {
+		String sentenciaUpdate = "UPDATE prestamos SET devuelto=? WHERE id_libro=? AND id_socio=?";
+		PreparedStatement preparedSt;
 		
-		
+		try {
+			preparedSt = con.prepareStatement(sentenciaUpdate);
+			preparedSt.setBoolean(1, true);
+			preparedSt.setInt(2, idLibro);
+			preparedSt.setInt(3, idSocio);
+			
+			preparedSt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void eliminarLibro(int id) {
@@ -178,6 +193,32 @@ public class GestorBBDD extends Conector {
 		}
 		return socios;
 	}
+	
+	public ArrayList<Prestamo> getPrestamosDeSocio(int idSocio) {
+		String sentenciaSelect = "SELECT * FROM prestamos WHERE id_socio = ?";
+		ArrayList <Prestamo> prestamos = new ArrayList<Prestamo>();
+		
+		try {
+			PreparedStatement preparedSt = con.prepareStatement(sentenciaSelect);
+			preparedSt.setInt(1, idSocio);
+			ResultSet resultado = preparedSt.executeQuery();
+			
+			while (resultado.next()) {
+				Prestamo prestamo = new Prestamo();
+				prestamo.setIdLibro(resultado.getInt("id_libro"));
+				prestamo.setIdSocio(resultado.getInt("id_socio"));
+				prestamo.setFecha(resultado.getDate("fecha"));
+				prestamo.setDevuelto(resultado.getBoolean("devuelto"));
+				
+				prestamos.add(prestamo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return prestamos;
+		
+	}
 
 	public Libro getLibro(int id) {
 		String sentenciaSelect = "SELECT * FROM libros WHERE id = ? ";
@@ -206,8 +247,7 @@ public class GestorBBDD extends Conector {
 		Socio socio = new Socio();
 		try {
 			PreparedStatement preparedSt = con.prepareStatement(sentenciaSelect);
-			int idSocio = id;
-			preparedSt.setInt(1, idSocio);
+			preparedSt.setInt(1, id);
 			ResultSet resultado = preparedSt.executeQuery();
 
 			if (resultado.next()) {
@@ -225,6 +265,8 @@ public class GestorBBDD extends Conector {
 		return socio;
 
 	}
+	
+	
 	
 	public int getIdConTitulo(String titulo) {
 		int id = 0;
@@ -246,13 +288,11 @@ public class GestorBBDD extends Conector {
 	}
 	
 	public int getIdConDni(String dni) {
-		int id = 0;
 		String sentenciaSelect = "SELECT id FROM socios WHERE dni = ? ";
-		
+		int id = 0;
 		try {
 			PreparedStatement preparedSt = con.prepareStatement(sentenciaSelect);
-			String dniSocio = dni;
-			preparedSt.setString(1, dniSocio);
+			preparedSt.setString(1, dni);
 			ResultSet resultado = preparedSt.executeQuery();
 			
 			if (resultado.next()) {

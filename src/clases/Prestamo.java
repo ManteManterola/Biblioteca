@@ -40,4 +40,10 @@ public class Prestamo {
 		this.devuelto = devuelto;
 	}
 
+	@Override
+	public String toString() {
+		return "Prestamo [idLibro=" + idLibro + ", idSocio=" + idSocio + ", fecha=" + fecha + ", devuelto=" + devuelto
+				+ "]";
+	}
+
 }

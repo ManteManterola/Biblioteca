@@ -30,8 +30,8 @@ public class Menu {
 	// Finals de las opciones del MenuPRESTAMO
 	public static final int INSERTAR_PRESTAMO = 1;
 	public static final int ELIMINAR_PRESTAMO = 2;
-	public static final int MODIFICAR_PRESTAMO = 3;
-	public static final int VISUALIZAR_PRESTAMO = 4;
+	public static final int DEVOLVER_PRESTAMO = 3;
+	public static final int VISUALIZAR_PRESTAMOS_ORDENADOS = 4;
 
 
 
@@ -69,8 +69,8 @@ public class Menu {
 		System.out.println(SALIR + ". Salir");
 		System.out.println(INSERTAR_PRESTAMO + ". Insertar prestamo");
 		System.out.println(ELIMINAR_PRESTAMO + ". Eliminar prestamo");
-		System.out.println(MODIFICAR_PRESTAMO + ". Modificar prestamo");
-		System.out.println(VISUALIZAR_PRESTAMO + ". Visualizar prestamo");
+		System.out.println(DEVOLVER_PRESTAMO + ". Devolver prestamo");
+		System.out.println(VISUALIZAR_PRESTAMOS_ORDENADOS + ". Visualizar prestamos ordenados alfabeticamente");
 	}
 	
 	static void mensajeSalir() {
